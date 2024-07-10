@@ -7,6 +7,7 @@ import (
 	"syscall"
 
 	"github.com/bwmarrin/discordgo"
+	"github.com/jsfraz/lada/handlers"
 )
 
 func main() {
@@ -18,6 +19,13 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+
+	// Register handleres
+	dg.AddHandler(handlers.MessageCreate)
+
+	// Fix to receive message content https://github.com/bwmarrin/discordgo/issues/1270
+	dg.Identify.Intents |= discordgo.IntentMessageContent
+
 	// Open the websocket and begin listening.
 	err = dg.Open()
 	if err != nil {

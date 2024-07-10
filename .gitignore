@@ -1,1 +1,2 @@
 .env.developement
+__debug_bin*
