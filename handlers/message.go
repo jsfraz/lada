@@ -18,11 +18,27 @@ func MessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if m.Author.ID == s.State.User.ID {
 		return
 	}
-	// Check if message content is pong
-	if strings.ToLower(m.Content) != "ping" {
+	// Check if message starts with bot mention
+	if !strings.HasPrefix(m.Content, s.State.User.Mention()) {
 		return
 	}
-	// Get mention
+	// Check if the message isn't empty
+	content := strings.TrimPrefix(m.Content, s.State.User.Mention())
+	// Remove leading spaces
+	spaceCount := 0
+	for spaceCount < len(content) && content[spaceCount] == ' ' {
+		spaceCount++
+	}
+	content = content[spaceCount:]
+	if content == "" {
+		return
+	}
+	log.Println(content)
+	// Check if message content is pong
+	if strings.ToLower(content) != "ping" {
+		return
+	}
+	// Set user mention
 	mention := ""
 	if m.GuildID != "" {
 		mention = fmt.Sprintf("%s ", m.Author.Mention())
