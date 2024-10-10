@@ -40,7 +40,7 @@ func MessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if m.GuildID != "" {
 		mention = fmt.Sprintf("%s ", m.Author.Mention())
 	}
-	// TODO generate response
+	// TODO Generate response
 	response := content
 	// Send message
 	_, err := s.ChannelMessageSend(m.ChannelID, fmt.Sprintf("%s%s", mention, response))

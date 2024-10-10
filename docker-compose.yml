@@ -1,0 +1,10 @@
+name: lada
+
+services:
+  server:
+    container_name: lada
+    build:
+      context: .
+    restart: always
+    environment:
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
